@@ -223,7 +223,9 @@ int main(){
 				break;
 				
 			case 5:
-				cout<<"\nSaliendo del programa ..."<<endl;
+				// SALIR DEL PROGRAMA 
+				cout<<"\n       Saliendo del programa ...."<<endl;
+				cout<<"\n   GRACIAS QUE TENGA UN BUEN DIA "<<endl;
 				break;
 			
 			default:
