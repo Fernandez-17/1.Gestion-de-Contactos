@@ -26,14 +26,14 @@ struct Contacto_email{
 const int nmax_contactos=50;
 Contacto_email contactos[nmax_contactos];
 int contacto_n=0;
-//                                          FUNCIONES PARA OPCION DEL MENU
+//                                         FUNCIONES PARA OPCION DEL MENU
 // 1.FUNCION PARA AGREGAR UN CONTACTO:
 void Agregar_contacto(){
 	if(contacto_n < nmax_contactos){
 		
 		cout<<"\n               HA SELECCIONADO LA OPCION 1        "<<endl;
 		cout<<"                    AGREGAR UN CONTACTO             "<<endl;
-		cout<< "---------------------------------------------------"<<endl;		
+		cout<< "___________________________________________________"<<endl;		
 		Contacto_email cont;
 		cin.ignore(); //limpia el buffer 
 			
@@ -70,7 +70,7 @@ void Agregar_contacto(){
 void Eliminar_contacto(){
 	cout << "\n             HA SELECCIONADO LA OPCION 2          "<<endl;
 	cout << "                ELIMINAR UN CONTACTO                "<<endl;
-	cout << "----------------------------------------------------"<<endl;
+	cout << "____________________________________________________"<<endl;
 	if ( contacto_n==0) {
 		cout<< "\n No se encontro este contacto, intentelo de nuevo.\n";
 		return ;
@@ -96,13 +96,28 @@ void Eliminar_contacto(){
 	}
 	
 	if (!encontrado){
-		cout << "\nNo se encontro ningun contacto con esa direccion email."<<endl;
-		
+		cout << "\nNo se encontro ningun contacto con esa direccion email."<<endl;	
 	}
 }
 	
 // 3.MOSTRAR LISTADO GENERAL DE CONTACTOS
-
+void Mostrar_listado(){
+	cout << "\n             HA SELECCIONADO LA OPCION 3            "<<endl;
+	cout << "          MOSTRAR LISTADO GENERAL DE CONTACTOS        "<<endl;
+	cout << "______________________________________________________"<<endl;
+	
+	cout << "\n          LISTA   GENERAL  DE  CONTACTOS          \n"<<endl;
+	for( int i=0 ; i < contacto_n ; i++){
+		cout<< "CONTACTO "<< i +1 <<":\n"<<endl,
+		cout<< "Nombre completo   : "<<contactos[i].nombres_completos<<endl;
+		cout<< "Sexo              : "<<contactos[i].sexo<<endl;
+		cout<< "Edad              : "<<contactos[i].edad<<endl;
+		cout<< "Telefono          : "<<contactos[i].telefono<<endl;
+		cout<< "Email             : "<<contactos[i].email<<endl;
+		cout<< "Nacionalidad      : "<<contactos[i].nacionalidad<<endl,
+		cout<< "---------------------------------------------------"<<endl;
+	}
+}
 
 // 4.MOSTRAR LISTADO DE CONTACTOS EXISTENTES , ORDENADO POR SERVIDOR DE CORREOS 
 
@@ -139,7 +154,7 @@ int main(){
 			    
 			case 3:
 				// LLAMAMOS A : MOSTRAR LISTADO GENERAL DE CONTACTOS
-			    //Mostrar_listado_general_de_contactos_registrados();
+			    Mostrar_listado();
 			    break;
 			    
 			case 4:
