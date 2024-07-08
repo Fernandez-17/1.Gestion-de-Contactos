@@ -31,13 +31,13 @@ int contacto_n=0;
 void Agregar_contacto(){
 	if(contacto_n < nmax_contactos){
 		
-		cout<<"\n        Ha seleccionado la opcion 1    "<<endl;
-		cout<<"           Agregar un contacto         "<<endl;
-				
+		cout<<"\n               HA SELECCIONADO LA OPCION 1        "<<endl;
+		cout<<"                    AGREGAR UN CONTACTO             "<<endl;
+		cout<< "---------------------------------------------------"<<endl;		
 		Contacto_email cont;
 		cin.ignore(); //limpia el buffer 
 			
-		cout<< "\n    NUEVO CONTACTO  "<<endl,
+		cout<< "\n                    NUEVO CONTACTO             \n"<<endl,
 	    cout<< "\nNombre completo: ";
 		getline(cin,cont.nombres_completos);
 		
@@ -62,20 +62,55 @@ void Agregar_contacto(){
 		
 		cout<< "\nContacto agregado exitosamente.\n";
 	}else{
-		cout<< "No es posible agregar mas contactos , se alcanzo el limite\n";
+		cout<< "\nNo es posible agregar mas contactos , se alcanzo el limite\n";
 	}
 }
 
 // 2.FUNCION PARA ELIMINAR UN CONTACTO
-
+void Eliminar_contacto(){
+	cout << "\n             HA SELECCIONADO LA OPCION 2          "<<endl;
+	cout << "                ELIMINAR UN CONTACTO                "<<endl;
+	cout << "----------------------------------------------------"<<endl;
+	if ( contacto_n==0) {
+		cout<< "\n No se encontro este contacto, intentelo de nuevo.\n";
+		return ;
+	}
+	cout << "\n                  CONTACTO A ELIMINAR           \n"<<endl;
+	string eliminar_contacto;
+	cout << "\n Ingrese la dirrecion email del contacto que desea eliminar \n";
+	cout << "\nDireccion email: ";
+	cin  >> eliminar_contacto;
+	
+	bool encontrado = false ;
+	for ( int i = 0 ; i < contacto_n ; i++ ){
+		if (contactos[i].email == eliminar_contacto){
+			encontrado = true;
+			
+			for(int j=0 ; j < contacto_n - 1 ; j++){
+				contactos [j]=contactos [j+1];
+			}
+			contacto_n = contacto_n - 1;
+			cout << "\nContacto eliminado exitosamente."<<endl;
+			break;
+		}
+	}
+	
+	if (!encontrado){
+		cout << "\nNo se encontro ningun contacto con esa direccion email."<<endl;
+		
+	}
+}
+	
 // 3.MOSTRAR LISTADO GENERAL DE CONTACTOS
 
+
 // 4.MOSTRAR LISTADO DE CONTACTOS EXISTENTES , ORDENADO POR SERVIDOR DE CORREOS 
+
 		
 // 5.FUNCION PARA MOSTRAR EL MENU DE OPCIONES 
 int mostrar_menu(){
 	int opcion;
-	cout << "----- MENÚ -----" << endl;
+	cout << "----------------------------------MENÚ -----------------------------" << endl;
     cout << "1. Aregar un contacto " << endl;
     cout << "2. Eliminar un contacto" << endl;
     cout << "3. Mostrar listado general de contactos registrados hasta el momento." << endl;
@@ -98,8 +133,8 @@ int main(){
 			    break;
 			    
 			case 2:
-				// LLAMAMOS A : 2.FUNCION PARA ELIMINAR UN CONTACTO
-			    //Eliminar_un_contacto();
+			    // LLAMAMOS A : 2.FUNCION PARA ELIMINAR UN CONTACTO
+				Eliminar_contacto();
 			    break;
 			    
 			case 3:
@@ -131,4 +166,5 @@ int main(){
 	getch();
 	return 0;
 }
+
 	
