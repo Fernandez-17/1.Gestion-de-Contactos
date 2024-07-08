@@ -71,10 +71,12 @@ void Eliminar_contacto(){
 	cout << "\n             HA SELECCIONADO LA OPCION 2          "<<endl;
 	cout << "                ELIMINAR UN CONTACTO                "<<endl;
 	cout << "____________________________________________________"<<endl;
+	
 	if ( contacto_n==0) {
 		cout<< "\n No se encontro este contacto, intentelo de nuevo.\n";
 		return ;
 	}
+	
 	cout << "\n                  CONTACTO A ELIMINAR           \n"<<endl;
 	string eliminar_contacto;
 	cout << "\n Ingrese la dirrecion email del contacto que desea eliminar \n";
@@ -85,12 +87,9 @@ void Eliminar_contacto(){
 	for ( int i = 0 ; i < contacto_n ; i++ ){
 		if (contactos[i].email == eliminar_contacto){
 			encontrado = true;
-			
-			for(int j=0 ; j < contacto_n - 1 ; j++){
-				contactos [j]=contactos [j+1];
-			}
-			contacto_n = contacto_n - 1;
-			cout << "\nContacto eliminado exitosamente."<<endl;
+			contactos[i] = contactos[contacto_n - 1];
+            contacto_n--;
+            cout << "\nContacto eliminado exitosamente." << endl;
 			break;
 		}
 	}
@@ -99,6 +98,9 @@ void Eliminar_contacto(){
 		cout << "\nNo se encontro ningun contacto con esa direccion email."<<endl;	
 	}
 }
+		
+		
+
 	
 // 3.MOSTRAR LISTADO GENERAL DE CONTACTOS
 void Mostrar_listado(){
@@ -121,7 +123,65 @@ void Mostrar_listado(){
 
 // 4.MOSTRAR LISTADO DE CONTACTOS EXISTENTES , ORDENADO POR SERVIDOR DE CORREOS 
 
+            // FUNCION PARA OBTENER SERVIDOR DE CORREO 
+string obtener_servidor_correo(const string& email) {
+    size_t pos = email.find('@');
+    if (pos != string::npos) {
+        return email.substr(pos + 1);
+    }
+    return ""; // En caso de que el correo no tenga '@'  se  retorna una cadena vacia
+}
+
+            // FUNCION  PARA ORDENAR CONTACTOS POR SU SERVIDOR DE CORREO CON METODO BURBUJA
+void ordenar_contactos_por_servidor() {
+    for (int i = 0; i < contacto_n - 1; ++i) {
+        for (int j = 0; j < contacto_n - i - 1; ++j) {
+            string servidor1 = obtener_servidor_correo(contactos[j].email);
+            string servidor2 = obtener_servidor_correo(contactos[j + 1].email);
+            
+            // Comparar los dominios y intercambiar si están en el orden incorrecto
+            if (servidor1 > servidor2) {
+                Contacto_email aux = contactos[j];
+                contactos[j] = contactos[j + 1];
+                contactos[j + 1] = aux;
+            }
+        }
+    }
+}
+
+              // FUNCION PARA MOSTRAR LISTA DE CONTACTOS ORDENADOS POR DOMINIO DE CORREO
+void Mostrar_listado_por_servidor() {
+    cout << "\n                  HA SELECCIONADO LA OPCION 4            " << endl;
+    cout << "MOSTRAR LISTA DE CONTACTOS EXISTENTES ORDENADOS POR SERVIDOR DE CORREO" << endl; 
+    cout << "______________________________________________________________________" << endl;
+    
+
+    // LLAMAMOS A LA FUNCION ORDENAR CONTACTO POR SERVIDOR
+    ordenar_contactos_por_servidor();
+
+    // MOSTRAMOS LOS CONTACTOS DE ACUERDO AL SERVIDOR
+    cout << "\nLISTADO DE CONTACTOS ORDENADO POR SERVIDOR DE CORREO\n" << endl;
+    string servidor_actual = "";
+    for (int i = 0; i < contacto_n; ++i) {
+    	string servidor = obtener_servidor_correo(contactos[i].email);
+    	if(servidor != servidor_actual){
+    		cout << "\n---------------------------------------------------" << endl;
+            cout << "Servidor de correo: " << servidor << endl;
+            cout << "---------------------------------------------------" << endl;
+            servidor_actual = servidor;
+		}
 		
+        cout << "Nombre completo   : " << contactos[i].nombres_completos << endl;
+        cout << "Sexo              : " << contactos[i].sexo << endl;
+        cout << "Edad              : " << contactos[i].edad << endl;
+        cout << "Telefono          : " << contactos[i].telefono << endl;
+        cout << "Email             : " << contactos[i].email << endl;
+        cout << "Nacionalidad      : " << contactos[i].nacionalidad << endl;
+        cout << "---------------------------------------------------" << endl;
+    }
+}
+
+
 // 5.FUNCION PARA MOSTRAR EL MENU DE OPCIONES 
 int mostrar_menu(){
 	int opcion;
@@ -159,7 +219,7 @@ int main(){
 			    
 			case 4:
 				// LLAMAMOS A : MOSTRAR LISTADO DE CONTACTOS EXISTENTES , ORDENADO POR SERVIDOR DE CORREOS 
-				//Mostrar_listado_de_contactos_existentes();
+				Mostrar_listado_por_servidor();
 				break;
 				
 			case 5:
@@ -168,7 +228,7 @@ int main(){
 			
 			default:
 				cout<<"\nOpcion no valida , intentelo de nuevo por favor"<<endl;
-				
+				break;
 		}
 				
 		if (opcion != 5) {
